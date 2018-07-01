@@ -17,5 +17,7 @@ namespace BudgetLib
                 return DateTime.ParseExact(YearMonth + daysInMonth, "yyyyMMdd", null);
             }
         }
+
+        public int DaysInMonth => DateTime.DaysInMonth(FirstDay.Year, FirstDay.Month);
     }
 }
