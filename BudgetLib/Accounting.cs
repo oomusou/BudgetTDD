@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 
 namespace BudgetLib
@@ -17,6 +18,11 @@ namespace BudgetLib
 
             if (budgets.Any())
             {
+                if (period.End < DateTime.ParseExact(budgets[0].YearMonth + "01", "yyyyMMdd", null))
+                {
+                    return 0m;
+                }
+
                 return period.Days;
             }
 
