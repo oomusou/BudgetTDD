@@ -17,12 +17,7 @@ namespace BudgetLib
 
             if (budgets.Any())
             {
-                if (period.End < budgets[0].FirstDay)
-                {
-                    return 0m;
-                }
-
-                return period.Days;
+                return period.OverlappingDays(budgets[0]);
             }
 
             return 0m;
