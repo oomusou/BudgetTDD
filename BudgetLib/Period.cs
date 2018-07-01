@@ -13,8 +13,6 @@ namespace BudgetLib
         public DateTime Start { get; }
         public DateTime End { get; }
 
-        public decimal Days => (End - Start).Days + 1;
-
         public decimal OverlappingDays(Budget budget)
         {
             if (HasNoOverlap(budget))
@@ -22,17 +20,9 @@ namespace BudgetLib
                 return 0m;
             }
 
-            if (End >= budget.LastDay)
-            {
-                return (budget.LastDay - Start).Days + 1;
-            }
-
-            if (Start <= budget.FirstDay)
-            {
-                return (End - budget.FirstDay).Days + 1;
-            }
-
-            return Days;
+            var overlapEnd = End < budget.LastDay ? End : budget.LastDay;
+            var overlapStart = Start > budget.FirstDay ? Start : budget.FirstDay;
+            return (overlapEnd - overlapStart).Days + 1;
         }
 
         private bool HasNoOverlap(Budget budget)
