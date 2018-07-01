@@ -59,6 +59,15 @@ namespace BudgetLib.UnitTests
             AmountShouldBe(1m, new DateTime(2018, 6, 15), new DateTime(2018, 7, 1));
         }
 
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void 日期區間不合理()
+        {
+           var start = new DateTime(2018, 7, 1);
+           var end = new DateTime(2018, 6, 15);
+            _accounting.TotalAmount(new Period(start, end));
+        }
+
         private void GivenBudget(params Budget[] budgets)
         {
             _budgetRepository.GetAll().Returns(budgets.ToList());
