@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NSubstitute;
@@ -39,7 +38,7 @@ namespace BudgetLib.UnitTests
 
         private void AmountShouldBe(decimal expected, DateTime start, DateTime end)
         {
-            var totalAmount = _accounting.TotalAmount(start, end);
+            var totalAmount = _accounting.TotalAmount(new Period(start, end));
             Assert.AreEqual(expected, totalAmount);
         }
     }
