@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NSubstitute;
 
@@ -19,6 +20,7 @@ namespace BudgetLib.UnitTests
         [TestMethod]
         public void 日期區間無Budget()
         {
+            _budgetRepository.GetAll().Returns(new List<Budget>());
             AmountShouldBe(0m, new DateTime(2018, 7, 15), new DateTime(2018, 7, 15));
         }
 
