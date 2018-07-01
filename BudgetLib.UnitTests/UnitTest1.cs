@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NSubstitute;
 
@@ -20,18 +21,20 @@ namespace BudgetLib.UnitTests
         [TestMethod]
         public void 日期區間無Budget()
         {
-            _budgetRepository.GetAll().Returns(new List<Budget>());
+            GivenBudget();
             AmountShouldBe(0m, new DateTime(2018, 7, 15), new DateTime(2018, 7, 15));
         }
 
         [TestMethod]
         public void 日期區間在Budget內()
         {
-            _budgetRepository.GetAll().Returns(new List<Budget>
-            {
-                new Budget {YearMonth = "201807", Amount = 31m}
-            });
+            GivenBudget(new Budget {YearMonth = "201807", Amount = 31m});
             AmountShouldBe(1m, new DateTime(2018, 7, 15), new DateTime(2018, 7, 15));
+        }
+
+        private void GivenBudget(params Budget[] budgets)
+        {
+            _budgetRepository.GetAll().Returns(budgets.ToList());
         }
 
         private void AmountShouldBe(decimal expected, DateTime start, DateTime end)
