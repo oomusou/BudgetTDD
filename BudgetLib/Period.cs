@@ -27,6 +27,11 @@ namespace BudgetLib
                 return (budget.LastDay - Start).Days + 1;
             }
 
+            if (Start <= budget.FirstDay)
+            {
+                return (End - budget.FirstDay).Days + 1;
+            }
+
             return Days;
         }
 
