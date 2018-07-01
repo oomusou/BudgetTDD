@@ -38,6 +38,13 @@ namespace BudgetLib.UnitTests
             AmountShouldBe(0m, new DateTime(2018, 6, 15), new DateTime(2018, 6, 15));
         }
 
+        [TestMethod]
+        public void 日期區間在Budget後()
+        {
+            GivenBudget(new Budget {YearMonth = "201807", Amount = 31m});
+            AmountShouldBe(0m, new DateTime(2018, 8, 15), new DateTime(2018, 8, 15));
+        }
+
         private void GivenBudget(params Budget[] budgets)
         {
             _budgetRepository.GetAll().Returns(budgets.ToList());
