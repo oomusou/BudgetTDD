@@ -63,9 +63,16 @@ namespace BudgetLib.UnitTests
         [ExpectedException(typeof(ArgumentException))]
         public void 日期區間不合理()
         {
-           var start = new DateTime(2018, 7, 1);
-           var end = new DateTime(2018, 6, 15);
+            var start = new DateTime(2018, 7, 1);
+            var end = new DateTime(2018, 6, 15);
             _accounting.TotalAmount(new Period(start, end));
+        }
+
+        [TestMethod]
+        public void 每天Budget不是1元()
+        {
+            GivenBudget(new Budget {YearMonth = "201807", Amount = 62m});
+            AmountShouldBe(2m, new DateTime(2018, 7, 15), new DateTime(2018, 7, 15));
         }
 
         private void GivenBudget(params Budget[] budgets)
