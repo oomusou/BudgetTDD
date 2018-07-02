@@ -13,21 +13,9 @@ namespace BudgetLib
 
         public decimal TotalAmount(Period period)
         {
-            var budgets = _budgetRepository.GetAll();
-
-            if (budgets.Any())
-            {
-                var totalAmount = 0m;
-
-                foreach (var budget in budgets)
-                {
-                    totalAmount += budget.MonthlyAmount(period);
-                }
-
-                return totalAmount;
-            }
-
-            return 0m;
+            return _budgetRepository
+                .GetAll()
+                .Sum(budget => budget.MonthlyAmount(period));
         }
     }
 }
