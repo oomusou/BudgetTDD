@@ -75,6 +75,16 @@ namespace BudgetLib.UnitTests
             AmountShouldBe(2m, new DateTime(2018, 7, 15), new DateTime(2018, 7, 15));
         }
 
+        [TestMethod]
+        public void 含多月Budget()
+        {
+            GivenBudget(
+                new Budget {YearMonth = "201806", Amount = 30m},
+                new Budget {YearMonth = "201807", Amount = 31m}
+            );
+            AmountShouldBe(31m, new DateTime(2018, 6, 15), new DateTime(2018, 7, 15));
+        }
+
         private void GivenBudget(params Budget[] budgets)
         {
             _budgetRepository.GetAll().Returns(budgets.ToList());
