@@ -21,9 +21,7 @@ namespace BudgetLib
 
                 foreach (var budget in budgets)
                 {
-                    var otherPeriod = new Period(budget.FirstDay, budget.LastDay);
-                    var monthlyAmount  = budget.DailyAmount * period.OverlappingDays(otherPeriod);
-                    totalAmount += monthlyAmount;
+                    totalAmount += budget.MonthlyAmount(period);
                 }
 
                 return totalAmount;

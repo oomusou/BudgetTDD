@@ -4,15 +4,22 @@ namespace BudgetLib
 {
     public class Budget
     {
-        public string YearMonth { get; set; }
-        public decimal Amount { get; set; }
+        public string YearMonth { private get; set; }
+        public decimal Amount { private get; set; }
 
-        public DateTime FirstDay => DateTime.ParseExact(YearMonth + "01", "yyyyMMdd", null);
+        private DateTime FirstDay => DateTime.ParseExact(YearMonth + "01", "yyyyMMdd", null);
 
-        public DateTime LastDay => DateTime.ParseExact(YearMonth + DaysInMonth, "yyyyMMdd", null);
+        private DateTime LastDay => DateTime.ParseExact(YearMonth + DaysInMonth, "yyyyMMdd", null);
 
-        public int DaysInMonth => DateTime.DaysInMonth(FirstDay.Year, FirstDay.Month);
+        private int DaysInMonth => DateTime.DaysInMonth(FirstDay.Year, FirstDay.Month);
 
-        public decimal DailyAmount => Amount / DaysInMonth;
+        private decimal DailyAmount => Amount / DaysInMonth;
+
+        private Period BudgetPeriod => new Period(FirstDay, LastDay);
+
+        public decimal MonthlyAmount(Period period)
+        {
+            return DailyAmount * period.OverlappingDays(BudgetPeriod);
+        }
     }
 }
