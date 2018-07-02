@@ -18,7 +18,8 @@ namespace BudgetLib
             if (budgets.Any())
             {
                 var budget = budgets[0];
-                return budget.DailyAmount * period.OverlappingDays(budget);
+                var otherPeriod = new Period(budget.FirstDay, budget.LastDay);
+                return budget.DailyAmount * period.OverlappingDays(otherPeriod);
             }
 
             return 0m;
